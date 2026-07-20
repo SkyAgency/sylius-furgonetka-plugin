@@ -1,0 +1,35 @@
+{# Per-method pickup-point selector. Injected via the select-shipping shipment.choice Twig hook. #}
+{# Class names + data-attributes are the front<->back contract for js/furgonetka-shop.js. #}
+{% trans_default_domain 'furgonetka' %}
+{% set method = hookable_metadata.context.method %}
+
+{# Radio checked state, re-rendered on every Live Component morph (JS mirrors it on click). #}
+{% set is_method_selected = hookable_metadata.context.form.vars.checked ?? false %}
+
+{# Null map config = method offers no pickup points, so the selector is not rendered. #}
+{% set map_config = furgonetka_map_configuration_for_method(method.code) %}
+{% if map_config is not null %}
+
+{% set saved = furgonetka_saved_pickup_point() %}
+{% set is_selected = saved is not null and saved.shippingMethodCode == method.code %}
+
+{# No `d-flex`: its `!important` would defeat the inline display:none toggle (see furgonetka-shop.css). #}
+<div class="furgonetka-pickup-point flex-column align-items-start gap-2"
+     data-method-code="{{ method.code }}"
+     data-courier-service="{{ map_config.courierService }}"
+     data-points-types="{{ map_config.pointsTypes|join(',') }}"
+     {% if not is_method_selected %}style="display: none;"{% endif %}
+     {{ sylius_test_html_attribute('furgonetka-pickup-point') }}>
+    <div class="furgonetka-pickup-point__selected alert alert-success py-2 px-3 mb-0 align-items-start gap-2"{% if not is_selected %} style="display: none;"{% endif %}>
+        {{ ux_icon('tabler:map-pin', { class: 'text-success flex-shrink-0 mt-1' }) }}
+        <span class="furgonetka-pickup-point__selected-body">
+            <span class="d-block fw-bold text-uppercase text-body-secondary small mb-1">{{ 'sylius.furgonetka.pickup_point.selected'|trans }}</span>
+            <span class="furgonetka-pickup-point__name text-break">{{ is_selected ? saved.pointName : '' }}</span>
+        </span>
+    </div>
+    <button type="button" class="btn btn-outline-primary btn-sm furgonetka-pickup-point__button d-inline-flex align-items-center gap-1 text-nowrap">
+        {{ ux_icon('tabler:map-pin') }}
+        <span class="furgonetka-pickup-point__button-label">{{ (is_selected ? 'sylius.furgonetka.pickup_point.change' : 'sylius.furgonetka.pickup_point.choose')|trans }}</span>
+    </button>
+</div>
+{% endif %}

@@ -1,0 +1,31 @@
+.furgonetka-modal.ui.modal > .content {
+    padding: 0;
+}
+
+iframe.furgonetka-iframe {
+    width: 100%;
+    height: calc(1vh * 100 - 206px);
+    overflow: auto;
+    border: 0;
+}
+
+.furgonetka-sidebar .button.fluid {
+    margin: 7px 0 0 0;
+}
+
+/* Furgonetka brand icon on the group header (1.14 has no native level-1 icon slot). */
+.sylius-admin-menu .item.furgonetka-menu-group > .header {
+    display: flex;
+    align-items: center;
+}
+
+.sylius-admin-menu .item.furgonetka-menu-group > .header::before {
+    content: "";
+    display: inline-block;
+    width: 1.1em;
+    height: 1.1em;
+    margin-right: .6em;
+    background-color: currentColor;
+    -webkit-mask: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiBpZD0iV2Fyc3R3YV8xIiB2aWV3Qm94PSIwIDAgMTAyNCAxMDI0Ij48ZGVmcz48c3R5bGU+LmNscy0xe2ZpbGw6IzFkMWQxYjt9PC9zdHlsZT48L2RlZnM+PHBhdGggY2xhc3M9ImNscy0xIiBkPSJtOTc2LjUxLDQ5My45NlYyMjkuNkw2MjkuODQsMzEuMzFjLTcyLjg1LTQxLjc0LTE2Mi43Mi00MS43NC0yMzUuNTcsMEw0Ny40OSwyMjkuNnY1MjguNjFsOTIuMzEsNTIuODF2LTIzNy40MWwxNTguNDEsOTAuMDV2LTEwNi40OWwtMTU4LjQxLTg5LjUxdi0xMzEuOGwyNjYuNzQsMTUxLjQxdi0xMDUuNzJsLTIyMS4wOS0xMjUuMjIsMjU1LjkxLTE0Ni40OGM0My43Ny0yNC45OCw5Ny42MS0yNC45OCwxNDEuMzgsMGwyNTUuMTQsMTQ2LjA0LTI1Ni40NywxNDUuODJ2LjIybC02OS4zMSwzOS40NHYxMDUuNjFsNTMuMjgtMzAuNzgsMTUuOTItOS4wOSwxODguMjYtMTA3LjA0LDExNC40MS02NS4wOHYzNzAuNDFsLTM3Mi4yMSwyMTIuOTgtMjEzLjc5LTEyMi4zNy01MS41MS0yOS40N3YxMDUuNjFsMjY1LjMxLDE1MS44NCw0NjQuNTEtMjY1Ljc4di0yNjQuMzZsLjIyLjExWiIvPjwvc3ZnPg==") no-repeat center / contain;
+    mask: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiBpZD0iV2Fyc3R3YV8xIiB2aWV3Qm94PSIwIDAgMTAyNCAxMDI0Ij48ZGVmcz48c3R5bGU+LmNscy0xe2ZpbGw6IzFkMWQxYjt9PC9zdHlsZT48L2RlZnM+PHBhdGggY2xhc3M9ImNscy0xIiBkPSJtOTc2LjUxLDQ5My45NlYyMjkuNkw2MjkuODQsMzEuMzFjLTcyLjg1LTQxLjc0LTE2Mi43Mi00MS43NC0yMzUuNTcsMEw0Ny40OSwyMjkuNnY1MjguNjFsOTIuMzEsNTIuODF2LTIzNy40MWwxNTguNDEsOTAuMDV2LTEwNi40OWwtMTU4LjQxLTg5LjUxdi0xMzEuOGwyNjYuNzQsMTUxLjQxdi0xMDUuNzJsLTIyMS4wOS0xMjUuMjIsMjU1LjkxLTE0Ni40OGM0My43Ny0yNC45OCw5Ny42MS0yNC45OCwxNDEuMzgsMGwyNTUuMTQsMTQ2LjA0LTI1Ni40NywxNDUuODJ2LjIybC02OS4zMSwzOS40NHYxMDUuNjFsNTMuMjgtMzAuNzgsMTUuOTItOS4wOSwxODguMjYtMTA3LjA0LDExNC40MS02NS4wOHYzNzAuNDFsLTM3Mi4yMSwyMTIuOTgtMjEzLjc5LTEyMi4zNy01MS41MS0yOS40N3YxMDUuNjFsMjY1LjMxLDE1MS44NCw0NjQuNTEtMjY1Ljc4di0yNjQuMzZsLjIyLjExWiIvPjwvc3ZnPg==") no-repeat center / contain;
+}

@@ -1,0 +1,16 @@
+# Loaded only on Sylius 1.14 (API Platform 2.7) by FurgonetkaSyliusFurgonetkaExtension.
+# The legacy DataPersister implements an ApiPlatform\Core interface that does not exist on 2.x,
+# so it must never be registered there. The v2 State Processor lives in the shared services.yaml.
+services:
+    Furgonetka\SyliusFurgonetkaPlugin\ApiPlatform\DataPersister\FurgonetkaSettingDataPersister:
+        autowire: true
+        autoconfigure: false
+        public: false
+        tags:
+            - { name: api_platform.data_persister }
+
+    # autoconfigure tags both the collection and item data-provider interfaces it implements.
+    Furgonetka\SyliusFurgonetkaPlugin\ApiPlatform\DataProvider\FurgonetkaSettingDataProvider:
+        autowire: true
+        autoconfigure: true
+        public: false

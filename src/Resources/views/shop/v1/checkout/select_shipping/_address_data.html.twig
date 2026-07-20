@@ -1,0 +1,24 @@
+{# Single per-page config element for the pickup-point map on the select-shipping step: #}
+{# endpoints, CSRF token, map SDK URL + environment and button labels (all page-global, #}
+{# the same for every shipping method), plus the shipping address (from the previous step) #}
+{# the map centres on. Rendered once via `sylius.shop.checkout.select_shipping.before_form` #}
+{# (var `order`). Read by js/furgonetka-shop.js. #}
+{% trans_default_domain 'furgonetka' %}
+{% set address = order.shippingAddress %}
+<div id="furgonetka-checkout-config"
+     data-sdk-url="{{ furgonetka_map_sdk_url() }}"
+     data-env="{{ furgonetka_map_environment() }}"
+     data-map-api-key="{{ furgonetka_map_api_key() }}"
+     data-save-url="{{ path('furgonetka_sylius_furgonetka_plugin_shop_pickup_point_save') }}"
+     data-clear-url="{{ path('furgonetka_sylius_furgonetka_plugin_shop_pickup_point_clear') }}"
+     data-csrf-token="{{ csrf_token('furgonetka_pickup_point') }}"
+     data-label-choose="{{ 'sylius.furgonetka.pickup_point.choose'|trans }}"
+     data-label-change="{{ 'sylius.furgonetka.pickup_point.change'|trans }}"
+     data-label-notice="{{ 'sylius.furgonetka.pickup_point.not_selected'|trans({}, 'validators') }}"
+     {% if address is not null %}
+     data-city="{{ address.city|e('html_attr') }}"
+     data-street="{{ address.street|e('html_attr') }}"
+     data-postcode="{{ address.postcode|e('html_attr') }}"
+     data-country-code="{{ address.countryCode|e('html_attr') }}"
+     {% endif %}
+     hidden></div>

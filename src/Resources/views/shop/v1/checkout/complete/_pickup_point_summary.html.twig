@@ -1,0 +1,17 @@
+{# Chosen pickup point for the order, shown inside the "Shipping address" box of the summary. #}
+{# Sylius 1.14 has no template event inside that column, so this is rendered hidden (anywhere in #}
+{# the complete summary, via the `sylius.shop.checkout.complete.summary` event) and the shared #}
+{# js/furgonetka-shop.js relocates it into #sylius-shipping-address and reveals it. #}
+{# This injects ONLY plugin markup/JS — it does not override any shop template. #}
+{% trans_default_domain 'furgonetka' %}
+{% set point = furgonetka_saved_pickup_point(order) %}
+
+{% if point is not null %}
+    <div id="furgonetka-complete-pickup-point" class="furgonetka-pickup-point-summary" hidden>
+        <i class="map marker alternate icon"></i>
+        <span class="furgonetka-pickup-point-summary__body">
+            <span class="furgonetka-pickup-point-summary__label">{{ 'sylius.furgonetka.pickup_point.selected'|trans }}</span>
+            <span class="furgonetka-pickup-point-summary__name">{{ point.pointName }}</span>
+        </span>
+    </div>
+{% endif %}

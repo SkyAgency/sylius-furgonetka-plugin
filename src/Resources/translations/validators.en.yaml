@@ -1,0 +1,4 @@
+sylius:
+    furgonetka:
+        pickup_point:
+            not_selected: 'Please choose a pickup point for the selected shipping method.'

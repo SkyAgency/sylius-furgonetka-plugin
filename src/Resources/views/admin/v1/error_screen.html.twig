@@ -1,0 +1,13 @@
+{% extends '@SyliusAdmin/layout.html.twig' %}
+{% trans_default_domain 'furgonetka' %}
+
+{% block title %}{{ 'sylius.furgonetka.furgonetka'|trans }}{% endblock %}
+
+{% block content %}
+    <iframe class="furgonetka-iframe" src="{{ errorScreenUrl }}"></iframe>
+    <script>
+        window.addEventListener('load', function() {
+            window.FurgonetkaAdmin.ErrorScreen.init('{{ baseShopUrl|e('js') }}', '{{ redirectUrl|e('js') }}');
+        });
+    </script>
+{% endblock %}

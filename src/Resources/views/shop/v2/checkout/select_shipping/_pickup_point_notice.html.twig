@@ -1,0 +1,9 @@
+{# Reproduces the PickupPointSelected 422 error on the 2.x select-shipping step: the Live Component #}
+{# rebuilds the form on re-render, so the form-level error is not surfaced (unlike 1.14's form_errors). #}
+{# Only on submit (PUT) and only when the selected method requires a point (same gate as the validator). #}
+{% set order = hookable_metadata.context.order %}
+{% if app.request.method == 'PUT' and furgonetka_order_requires_pickup_point(order) and furgonetka_saved_pickup_point(order) is null %}
+    <div id="furgonetka-pickup-point-notice" class="alert alert-danger" role="alert" {{ sylius_test_html_attribute('furgonetka-pickup-point-notice') }}>
+        {{ 'sylius.furgonetka.pickup_point.not_selected'|trans({}, 'validators') }}
+    </div>
+{% endif %}

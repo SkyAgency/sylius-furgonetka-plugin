@@ -1,0 +1,17 @@
+{# Shows the chosen pickup point inside the "Shipping address" box of the order summary. #}
+{# Injected via the `sylius_shop.shared.order.show.summary.addresses.shipping.body` Twig hook, #}
+{# so it also appears on the thank-you page and in the account order history — `order` is read #}
+{# from the hook context, and the point is looked up per order (not per current cart). #}
+{% trans_default_domain 'furgonetka' %}
+{% set order = hookable_metadata.context.order %}
+{% set point = furgonetka_saved_pickup_point(order) %}
+
+{% if point is not null %}
+    <div class="furgonetka-pickup-point-summary d-flex align-items-start gap-2 mt-2">
+        {{ ux_icon('tabler:map-pin', { class: 'text-success flex-shrink-0 mt-1' }) }}
+        <span>
+            <span class="furgonetka-pickup-point-summary__label d-block text-body-secondary small text-uppercase fw-bold">{{ 'sylius.furgonetka.pickup_point.selected'|trans }}</span>
+            <span class="furgonetka-pickup-point-summary__name">{{ point.pointName }}</span>
+        </span>
+    </div>
+{% endif %}

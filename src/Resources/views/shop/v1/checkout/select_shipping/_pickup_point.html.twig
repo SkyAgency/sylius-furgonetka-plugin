@@ -1,0 +1,31 @@
+{# Per-method pickup-point selector. Injected via the select_shipping.choice_item_extra event. #}
+{# Class names + data-attributes are the front<->back contract for js/furgonetka-shop.js. #}
+{% trans_default_domain 'furgonetka' %}
+
+{# Null map config = method offers no pickup points, so the selector is not rendered. #}
+{% set map_config = furgonetka_map_configuration_for_method(method.code) %}
+{% if map_config is not null %}
+
+{% set saved = furgonetka_saved_pickup_point() %}
+{% set is_selected = saved is not null and saved.shippingMethodCode == method.code %}
+
+{# Hidden by default; the 1.14 choice event exposes no checked state, so the JS reveals the chosen method's selector. #}
+<div class="furgonetka-pickup-point"
+     data-method-code="{{ method.code }}"
+     data-courier-service="{{ map_config.courierService }}"
+     data-points-types="{{ map_config.pointsTypes|join(',') }}"
+     style="display: none;"
+     {{ sylius_test_html_attribute('furgonetka-pickup-point') }}>
+    <div class="furgonetka-pickup-point__selected"{% if not is_selected %} style="display: none;"{% endif %}>
+        <i class="map marker alternate icon"></i>
+        <span class="furgonetka-pickup-point__selected-body">
+            <span class="furgonetka-pickup-point__selected-label">{{ 'sylius.furgonetka.pickup_point.selected'|trans }}</span>
+            <span class="furgonetka-pickup-point__name">{{ is_selected ? saved.pointName : '' }}</span>
+        </span>
+    </div>
+    <button type="button" class="ui small button furgonetka-pickup-point__button">
+        <i class="map marker alternate icon"></i>
+        <span class="furgonetka-pickup-point__button-label">{{ (is_selected ? 'sylius.furgonetka.pickup_point.change' : 'sylius.furgonetka.pickup_point.choose')|trans }}</span>
+    </button>
+</div>
+{% endif %}

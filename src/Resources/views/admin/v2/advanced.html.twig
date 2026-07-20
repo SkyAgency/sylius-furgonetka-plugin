@@ -1,0 +1,14 @@
+{% extends '@SyliusAdmin/shared/layout/base.html.twig' %}
+{% trans_default_domain 'furgonetka' %}
+
+{% block title %}{{ 'sylius.furgonetka.menu.advanced_settings'|trans }} - {{ 'sylius.furgonetka.furgonetka'|trans }} {{ parent() }}{% endblock %}
+
+{% block body %}
+    {% hook 'sylius_admin.furgonetka.page' with {
+        screen: 'advanced',
+        title: pageTitle,
+        reset_url: resetUrl,
+        download_url: downloadErrorLogsUrl,
+        file_name: errorLogsFileName
+    } %}
+{% endblock %}

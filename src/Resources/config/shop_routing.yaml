@@ -1,0 +1,15 @@
+furgonetka_sylius_furgonetka_plugin_shop_pickup_point_save:
+    path: '/furgonetka/ajax/pickup-point'
+    methods: [ POST ]
+    defaults:
+        _controller: Furgonetka\SyliusFurgonetkaPlugin\Controller\Shop\FurgonetkaShopPickupPointController::saveAction
+        _sylius:
+            section: shop
+
+furgonetka_sylius_furgonetka_plugin_shop_pickup_point_clear:
+    path: '/furgonetka/ajax/pickup-point/clear'
+    methods: [ POST ]
+    defaults:
+        _controller: Furgonetka\SyliusFurgonetkaPlugin\Controller\Shop\FurgonetkaShopPickupPointController::clearAction
+        _sylius:
+            section: shop

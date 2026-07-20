@@ -1,0 +1,8 @@
+{% extends '@SyliusAdmin/shared/layout/base.html.twig' %}
+{% trans_default_domain 'furgonetka' %}
+
+{% block title %}{{ 'sylius.furgonetka.furgonetka'|trans }} {{ parent() }}{% endblock %}
+
+{% block body %}
+    {% hook 'sylius_admin.furgonetka.page' with { screen: 'iframe', title: pageTitle, app_url: appUrl } %}
+{% endblock %}

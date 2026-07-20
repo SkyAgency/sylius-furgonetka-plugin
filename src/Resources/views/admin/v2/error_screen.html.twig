@@ -1,0 +1,14 @@
+{% extends '@SyliusAdmin/shared/layout/base.html.twig' %}
+{% trans_default_domain 'furgonetka' %}
+
+{% block title %}{{ 'sylius.furgonetka.furgonetka'|trans }} {{ parent() }}{% endblock %}
+
+{% block body %}
+    {% hook 'sylius_admin.furgonetka.page' with {
+        screen: 'error',
+        title: pageTitle,
+        base_shop_url: baseShopUrl,
+        error_screen_url: errorScreenUrl,
+        redirect_url: redirectUrl
+    } %}
+{% endblock %}

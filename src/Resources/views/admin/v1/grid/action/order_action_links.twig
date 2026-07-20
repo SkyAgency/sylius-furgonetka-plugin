@@ -1,0 +1,23 @@
+{% trans_default_domain 'furgonetka' %}
+{% set visible = options.visible is defined ? options.visible : true %}
+{% set furgonetka_is_company_account = options.furgonetka_is_company_account %}
+
+{% if visible %}
+    <div class="ui labeled icon link button"
+         onclick="window.FurgonetkaAdmin.Modal.openModal('{{ url('furgonetka_sylius_furgonetka_plugin_admin_action_quick_package', {'orderId': data.id}) }}')">
+        <i class="ui shipping fast icon"></i><span>{{ 'sylius.furgonetka.quick_package'|trans }}</span>
+    </div>
+    <div class="ui icon top right pointing floating dropdown link button">
+        <i class="ellipsis horizontal icon"></i>
+        <div class="menu">
+            {% if furgonetka_is_company_account %}
+                <a class="item"
+                   onclick="window.FurgonetkaAdmin.Modal.openModal('{{ url('furgonetka_sylius_furgonetka_plugin_admin_action_quick_invoice', {'orderId': data.id}) }}')"><i
+                        class="ui file alternate icon"></i><span>{{ 'sylius.furgonetka.create_invoice'|trans }}</span></a>
+            {% endif %}
+            <a class="item"
+               href="{{ url('furgonetka_sylius_furgonetka_plugin_admin_action_package_form', {'orderId': data.id}) }}"><i
+                    class="ui box icon"></i><span>{{ 'sylius.furgonetka.package'|trans }}</span></a>
+        </div>
+    </div>
+{% endif %}

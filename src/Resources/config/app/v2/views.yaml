@@ -1,0 +1,85 @@
+# Sylius 2.0 - 2.2 admin view integration (Bootstrap 5 + Twig Hooks).
+# Loaded automatically by FurgonetkaSyliusFurgonetkaExtension::prepend() when Sylius major version is >= 2.
+# Hook names verified against sylius/sylius 2.0 AdminBundle (templates/shared/layout + twig_hooks/common, order).
+sylius_grid:
+    templates:
+        action:
+            furgonetka_order_action_links: "@FurgonetkaSyliusFurgonetkaPlugin/admin/v2/grid/action/order_action_links.twig"
+
+sylius_twig_hooks:
+    hooks:
+        # Global assets + the (hidden) modal markup, available on every admin page.
+        'sylius_admin.base#stylesheets':
+            furgonetka_admin_stylesheets:
+                template: '@FurgonetkaSyliusFurgonetkaPlugin/admin/v2/_stylesheets.html.twig'
+
+        'sylius_admin.base#javascripts':
+            furgonetka_admin_javascripts:
+                template: '@FurgonetkaSyliusFurgonetkaPlugin/admin/v2/_javascripts.html.twig'
+            furgonetka_admin_modal:
+                template: '@FurgonetkaSyliusFurgonetkaPlugin/admin/v2/_modal.html.twig'
+
+        # Furgonetka box in the right column of the order details page.
+        'sylius_admin.order.show.content.sections#right':
+            furgonetka_order_sidebar:
+                template: '@FurgonetkaSyliusFurgonetkaPlugin/admin/v2/order/show/_furgonetka_sidebar.html.twig'
+                priority: 150
+
+        # Chosen pickup point, rendered right under the shipping address (between it at 100 and edit_addresses at 0).
+        'sylius_admin.order.show.content.sections.customer':
+            furgonetka_pickup_point:
+                template: '@FurgonetkaSyliusFurgonetkaPlugin/admin/v2/order/show/_pickup_point.html.twig'
+                priority: 50
+
+        # Full-page plugin screens (welcome/error/iframe/advanced) — self-contained shell, like the dashboard.
+        'sylius_admin.furgonetka.page':
+            sidebar:
+                template: '@SyliusAdmin/shared/crud/common/sidebar.html.twig'
+                priority: 200
+            navbar:
+                template: '@SyliusAdmin/shared/crud/common/navbar.html.twig'
+                priority: 100
+            content:
+                template: '@SyliusAdmin/shared/crud/common/content.html.twig'
+                priority: 0
+
+        'sylius_admin.furgonetka.page.content':
+            furgonetka_content:
+                template: '@FurgonetkaSyliusFurgonetkaPlugin/admin/v2/content/page.html.twig'
+                priority: 0
+
+        # --- Shop checkout: pickup-point selection (shared JS + backend, Bootstrap 5 markup) ---
+
+        # Pickup-point assets on every storefront page (JS lazy-loads the Furgonetka map SDK on click only).
+        'sylius_shop.base#javascripts':
+            furgonetka_shop_javascripts:
+                template: '@FurgonetkaSyliusFurgonetkaPlugin/shop/v2/_javascripts.html.twig'
+
+        'sylius_shop.base#stylesheets':
+            furgonetka_shop_stylesheets:
+                template: '@FurgonetkaSyliusFurgonetkaPlugin/shop/v2/_stylesheets.html.twig'
+
+        # Expose the shipping address (from the previous step) for the map to centre on. Rendered
+        # once; reads `order` from the form component context (like the navigation block).
+        'sylius_shop.checkout.select_shipping.content.form':
+            furgonetka_pickup_point_address:
+                template: '@FurgonetkaSyliusFurgonetkaPlugin/shop/v2/checkout/select_shipping/_address_data.html.twig'
+                priority: 50
+            # Visible pickup-point requirement notice (the 2.x Live Component does not surface the
+            # server-side form error on the 422 re-render). Rendered above the shipments list.
+            furgonetka_pickup_point_notice:
+                template: '@FurgonetkaSyliusFurgonetkaPlugin/shop/v2/checkout/select_shipping/_pickup_point_notice.html.twig'
+                priority: 110
+
+        # Pickup-point selector rendered per shipping method, after the fee (reads `method` from context).
+        'sylius_shop.checkout.select_shipping.content.form.shipments.shipment.choice':
+            furgonetka_pickup_point:
+                template: '@FurgonetkaSyliusFurgonetkaPlugin/shop/v2/checkout/select_shipping/_pickup_point.html.twig'
+                priority: -100
+
+        # Chosen pickup point shown inside the "Shipping address" box of the order summary
+        # (complete step, plus the thank-you page and account order history — same shared hook).
+        'sylius_shop.shared.order.show.summary.addresses.shipping.body':
+            furgonetka_pickup_point:
+                template: '@FurgonetkaSyliusFurgonetkaPlugin/shop/v2/checkout/complete/_pickup_point_summary.html.twig'
+                priority: -50

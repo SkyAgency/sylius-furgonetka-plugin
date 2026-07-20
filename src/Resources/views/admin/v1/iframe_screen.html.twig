@@ -1,0 +1,8 @@
+{% extends '@SyliusAdmin/layout.html.twig' %}
+{% trans_default_domain 'furgonetka' %}
+
+{% block title %}{{ 'sylius.furgonetka.furgonetka'|trans }}{% endblock %}
+
+{% block content %}
+    <iframe class="furgonetka-iframe" src="{{ appUrl }}"></iframe>
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends '@SyliusAdmin/layout.html.twig' %}
+{% trans_default_domain 'furgonetka' %}
+
+{% block title %}{{ 'sylius.furgonetka.begin'|trans }} - {{ 'sylius.furgonetka.furgonetka'|trans }}{% endblock %}
+
+{% block content %}
+    {% include '@FurgonetkaSyliusFurgonetkaPlugin/admin/v1/_connection_alert.html.twig' %}
+    <iframe class="furgonetka-iframe" src="{{ welcomeUrl }}"></iframe>
+    <script>
+        window.addEventListener('load', function() {
+            window.FurgonetkaAdmin.Integration.init('{{ baseShopUrl|e('js') }}', '{{ connectUrl|e('js') }}');
+        });
+    </script>
+{% endblock %}

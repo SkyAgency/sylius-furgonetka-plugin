@@ -1,0 +1,24 @@
+resources:
+    Furgonetka\SyliusFurgonetkaPlugin\ApiPlatform\Resource\FurgonetkaSettingResource:
+        operations:
+            ApiPlatform\Metadata\Post:
+                name: admin_furgonetka_setting_post
+                uriTemplate: /admin/furgonetka/settings
+                security: "is_granted('ROLE_API_ACCESS')"
+                # Write-only command: 201 with no body. output:false keeps the response identical to v1.
+                status: 201
+                output: false
+                processor: Furgonetka\SyliusFurgonetkaPlugin\ApiPlatform\State\FurgonetkaSettingProcessor
+            ApiPlatform\Metadata\GetCollection:
+                name: admin_furgonetka_setting_get_collection
+                uriTemplate: /admin/furgonetka/settings
+                security: "is_granted('ROLE_API_ACCESS')"
+                provider: Furgonetka\SyliusFurgonetkaPlugin\ApiPlatform\State\FurgonetkaSettingProvider
+            ApiPlatform\Metadata\Get:
+                name: admin_furgonetka_setting_get
+                uriTemplate: /admin/furgonetka/settings/{name}
+                security: "is_granted('ROLE_API_ACCESS')"
+                provider: Furgonetka\SyliusFurgonetkaPlugin\ApiPlatform\State\FurgonetkaSettingProvider
+        properties:
+            name:
+                identifier: true

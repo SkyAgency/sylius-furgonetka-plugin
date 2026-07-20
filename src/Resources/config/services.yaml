@@ -1,0 +1,180 @@
+services:
+    _instanceof:
+        Furgonetka\SyliusFurgonetkaPlugin\Api\AbstractFurgonetkaApi:
+            bind:
+                string $pluginVersion: '%furgonetka.plugin_version%'
+
+#   ADMIN CONTROLLERS (shared across Sylius 1.14 and 2.x)
+    Furgonetka\SyliusFurgonetkaPlugin\Controller\Admin\FurgonetkaAdminActionController:
+        autowire: true
+        autoconfigure: true
+        public: false
+        bind:
+            string $adminViewsVersion: '%furgonetka.admin.views_version%'
+
+    Furgonetka\SyliusFurgonetkaPlugin\Controller\Admin\FurgonetkaAdminAdvancedController:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    Furgonetka\SyliusFurgonetkaPlugin\Controller\Admin\FurgonetkaAdminIntegrationController:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    Furgonetka\SyliusFurgonetkaPlugin\Controller\Admin\FurgonetkaAdminPageController:
+        autowire: true
+        autoconfigure: true
+        public: false
+        bind:
+            string $adminViewsVersion: '%furgonetka.admin.views_version%'
+
+#   SHOP CONTROLLERS (shared across Sylius 1.14 and 2.x)
+    Furgonetka\SyliusFurgonetkaPlugin\Controller\Shop\FurgonetkaShopPickupPointController:
+        autowire: true
+        autoconfigure: true
+        public: true
+
+#   LISTENERS
+    Furgonetka\SyliusFurgonetkaPlugin\Listener\AdminMenuListener:
+        autowire: true
+        autoconfigure: true
+        tags:
+            - { name: kernel.event_listener, event: sylius.menu.admin.main, method: addAdminMenuItems }
+
+    Furgonetka\SyliusFurgonetkaPlugin\Listener\AdminOrdersListListener:
+        autowire: true
+        autoconfigure: true
+        tags:
+            - { name: kernel.event_listener, event: sylius.grid.admin_order, method: addOrderActionLinks }
+
+    Furgonetka\SyliusFurgonetkaPlugin\Listener\ErrorScreenListener:
+        autowire: true
+        autoconfigure: true
+        tags:
+            - { name: kernel.event_listener, event: kernel.exception, method: onKernelException }
+
+#   VALIDATORS
+    Furgonetka\SyliusFurgonetkaPlugin\Validator\Constraints\PickupPointSelectedValidator:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+#   FORM EXTENSIONS
+    Furgonetka\SyliusFurgonetkaPlugin\Form\Extension\SelectShippingTypeExtension:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+#   TWIG
+    Furgonetka\SyliusFurgonetkaPlugin\Twig\FurgonetkaAdminExtension:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    Furgonetka\SyliusFurgonetkaPlugin\Twig\FurgonetkaShopExtension:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+#   FURGONETKA API
+    Furgonetka\SyliusFurgonetkaPlugin\Api\FurgonetkaApi:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    Furgonetka\SyliusFurgonetkaPlugin\Api\FurgonetkaOAuthApi:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+#   SERVICES
+    Furgonetka\SyliusFurgonetkaPlugin\Service\FurgonetkaAuthService:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    Furgonetka\SyliusFurgonetkaPlugin\Service\FurgonetkaIntegrationService:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    Furgonetka\SyliusFurgonetkaPlugin\Service\FurgonetkaLogsService:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    Furgonetka\SyliusFurgonetkaPlugin\Service\FurgonetkaMapService:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    Furgonetka\SyliusFurgonetkaPlugin\Service\FurgonetkaSettingsService:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    Furgonetka\SyliusFurgonetkaPlugin\Service\SyliusUserService:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+#   REPOSITORIES
+    Furgonetka\SyliusFurgonetkaPlugin\Repository\FurgonetkaLogsRepository:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    Furgonetka\SyliusFurgonetkaPlugin\Repository\FurgonetkaSettingsRepository:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    Furgonetka\SyliusFurgonetkaPlugin\Repository\FurgonetkaPickupPointRepository:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+#   API PLATFORM (settings endpoint for furgonetka.pl)
+    Furgonetka\SyliusFurgonetkaPlugin\ApiPlatform\State\FurgonetkaSettingProcessor:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    Furgonetka\SyliusFurgonetkaPlugin\ApiPlatform\State\FurgonetkaSettingProvider:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+#   API PLATFORM (order export endpoint for furgonetka.pl)
+    Furgonetka\SyliusFurgonetkaPlugin\Serializer\OrderNormalizer:
+        autowire: false
+        autoconfigure: true
+        public: false
+        arguments:
+            $liipImagineFilterService: '@liip_imagine.service.filter'
+            $pickupPointRepository: '@Furgonetka\SyliusFurgonetkaPlugin\Repository\FurgonetkaPickupPointRepository'
+        tags:
+            - { name: 'serializer.normalizer', priority: 100 }
+
+    sylius.api.furgonetka.order_id_numeric_filter:
+        parent: 'api_platform.doctrine.orm.numeric_filter'
+        public: true
+        tags:
+            - { name: 'api_platform.filter' }
+
+    sylius.api.furgonetka.order_updated_at_date_filter:
+        parent: 'api_platform.doctrine.orm.date_filter'
+        public: true
+        arguments:
+            - { updatedAt: 'exclude_null' }
+        tags:
+            - { name: 'api_platform.filter' }
+
+    sylius.api.furgonetka.order_updated_at_order_filter:
+        parent: 'api_platform.doctrine.orm.order_filter'
+        public: true
+        arguments:
+            - { updatedAt: ~ }
+        tags:
+            - { name: 'api_platform.filter' }

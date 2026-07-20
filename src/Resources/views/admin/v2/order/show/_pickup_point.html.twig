@@ -1,0 +1,19 @@
+{# Chosen pickup point, rendered right under the shipping address in the order details. #}
+{# Injected via the `sylius_admin.order.show.content.sections.customer` Twig hook; `order` is #}
+{# read from the hook context and the point is looked up per order. #}
+{% trans_default_domain 'furgonetka' %}
+{% set order = hookable_metadata.context.resource %}
+{% set point = furgonetka_saved_pickup_point(order) %}
+
+{% if point is not null %}
+    <div>
+        <strong>{{ 'sylius.furgonetka.pickup_point.selected'|trans }}</strong>
+    </div>
+    <div class="furgonetka-pickup-point-admin mb-3 d-flex align-items-start gap-2">
+        {{ ux_icon('tabler:map-pin', { class: 'text-success flex-shrink-0 mt-1' }) }}
+        <span>
+            <span class="d-block">{{ point.pointName ?? '' }}</span>
+            {% if point.pointCode %}<span class="text-body-secondary small">{{ point.pointCode }}</span>{% endif %}
+        </span>
+    </div>
+{% endif %}

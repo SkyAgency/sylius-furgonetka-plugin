@@ -1,0 +1,38 @@
+/* Plain (non-!important) flex display so the inline `display:none` show/hide toggle in
+   furgonetka-shop.js works — Bootstrap's `.d-flex` is `!important` and would defeat it. */
+.furgonetka-pickup-point__selected,
+.furgonetka-pickup-point {
+    display: flex;
+}
+
+/* ux_icon SVGs carry no width/height; some hosts don't size bare SVGs, so pin it. */
+.furgonetka-pickup-point svg,
+.furgonetka-pickup-point-summary svg {
+    width: 1.25rem;
+    height: 1.25rem;
+}
+
+/* The selector sits in the shipping-method's `d-flex` label row alongside the details + fee.
+   Allow that label to wrap (harmless for rows without a selector — they never overflow) so the
+   selector can take its own full-width line via flex-basis, instead of a long point name
+   squeezing the method description into a sliver. Targets the label by its class combo rather
+   than `:has`, since the selector is injected as a child and can't style its parent otherwise. */
+label.card-body.d-flex {
+    flex-wrap: wrap;
+}
+.furgonetka-pickup-point {
+    flex-basis: 100%;
+}
+
+/* Keep the selected-point banner compact instead of spanning the whole row. */
+.furgonetka-pickup-point__selected {
+    max-width: 32rem;
+}
+
+/* The pickup-point summary makes the shipping-address card taller; the order-summary address
+   columns already stretch to equal height (Bootstrap `.row`), so make both address cards fill
+   their column to stay level. Targets the address columns by class combo instead of `:has`
+   (the card is an ancestor of the injected summary, so it can't be reached otherwise). */
+.col-12.col-md-6 > .card.border-0.bg-body-tertiary {
+    height: 100%;
+}

@@ -1,0 +1,23 @@
+{% extends '@SyliusAdmin/layout.html.twig' %}
+{% trans_default_domain 'furgonetka' %}
+
+{% block title %}{{ 'sylius.furgonetka.menu.advanced_settings'|trans }} - {{ 'sylius.furgonetka.furgonetka'|trans }}{% endblock %}
+
+{% block content %}
+    <div class="ui segment">
+        <h3 class="ui dividing header">{{ 'sylius.furgonetka.api_account'|trans }}</h3>
+        <p>{{ 'sylius.furgonetka.reset_button_description'|trans }}</p>
+        <form method="post" action="{{ resetUrl }}">
+            <input type="hidden" name="_token" value="{{ csrf_token('furgonetka_reset') }}">
+            <button type="submit" class="ui red button">{{ 'sylius.furgonetka.reset_button'|trans }}</button>
+        </form>
+    </div>
+
+    <div class="ui segment">
+        <h3 class="ui dividing header">{{ 'sylius.furgonetka.error_logs'|trans }}</h3>
+        <p>{{ 'sylius.furgonetka.error_logs_description'|trans }}</p>
+        <a href="{{ downloadErrorLogsUrl }}" download="{{ errorLogsFileName }}" class="ui primary button">
+            {{ 'sylius.furgonetka.download_button'|trans }}
+        </a>
+    </div>
+{% endblock %}

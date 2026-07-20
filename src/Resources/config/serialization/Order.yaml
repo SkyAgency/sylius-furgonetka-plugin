@@ -1,0 +1,11 @@
+Sylius\Component\Core\Model\Order:
+    attributes:
+        createdAt:
+            groups:
+                - admin:furgonetka:order:index
+        updatedAt:
+            groups:
+                - admin:furgonetka:order:index
+        checkoutCompletedAt:
+            groups:
+                - admin:furgonetka:order:index

@@ -1,0 +1,16 @@
+'%sylius.model.order.class%':
+    properties:
+        id:
+            filterable: true
+    collectionOperations:
+        admin_furgonetka_order_get:
+            method: GET
+            path: /admin/furgonetka/orders
+            order:
+                updatedAt: DESC
+            filters:
+                - sylius.api.furgonetka.order_id_numeric_filter
+                - sylius.api.furgonetka.order_updated_at_order_filter
+                - sylius.api.furgonetka.order_updated_at_date_filter
+            normalization_context:
+                groups: ['admin:furgonetka:order:index', 'admin:order:index']

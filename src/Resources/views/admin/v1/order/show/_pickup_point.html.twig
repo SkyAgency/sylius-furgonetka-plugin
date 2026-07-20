@@ -1,0 +1,18 @@
+{# Chosen pickup point for the order. Sylius 1.14 has no event inside the addresses column #}
+{# (`_addresses.html.twig` is one atomic block), so this is a sidebar block rendered hidden #}
+{# and the admin JS relocates it directly under #shipping-address — matching the 2.x hook #}
+{# placement (and the storefront-complete relocation pattern). Context carries `order`. #}
+{% trans_default_domain 'furgonetka' %}
+{% set point = furgonetka_saved_pickup_point(order) %}
+
+{% if point is not null %}
+    <div id="furgonetka-pickup-point" hidden>
+        <div class="ui divider"></div>
+        <div class="ui sub header">{{ 'sylius.furgonetka.pickup_point.selected'|trans }}</div>
+        <div>
+            <i class="map marker alternate icon"></i>
+            {{ point.pointName ?? '' }}
+        </div>
+        {% if point.pointCode %}<div class="ui small grey text">{{ point.pointCode }}</div>{% endif %}
+    </div>
+{% endif %}

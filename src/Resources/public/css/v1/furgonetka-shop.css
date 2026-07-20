@@ -1,0 +1,112 @@
+/* Pin the pickup-point column (rendered into the shipping method's `.extra`) to a consistent
+   right edge across rows, regardless of how long each method's description is. We force the
+   method row to flex, let the content column grow, and push `.extra` to the right. Scoped via
+   :has() so only rows that actually contain a pickup-point selector are affected. */
+.item:has(> .extra .furgonetka-pickup-point) {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+}
+
+.item:has(> .extra .furgonetka-pickup-point) > .content {
+    flex: 1 1 auto;
+}
+
+.item:has(> .extra .furgonetka-pickup-point) > .extra {
+    flex: 0 0 auto;
+    margin-left: auto;
+}
+
+.furgonetka-pickup-point {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-top: 0;
+}
+
+/* Selected point card */
+.furgonetka-pickup-point__selected {
+    align-self: stretch;
+    display: flex;
+    align-items: flex-start;
+    gap: .45rem;
+    padding: .6rem .75rem;
+    margin-bottom: .6rem;
+    background: #f1f8f1;
+    border: 1px solid #c9e3c9;
+    border-radius: .35rem;
+    font-size: .92em;
+    line-height: 1.35;
+}
+
+.furgonetka-pickup-point__selected .icon {
+    margin: .05rem 0 0;
+    color: #21ba45;
+    flex: 0 0 auto;
+}
+
+.furgonetka-pickup-point__selected-body {
+    display: block;
+}
+
+.furgonetka-pickup-point__selected-label {
+    display: block;
+    font-weight: 700;
+    color: #5a6b5a;
+    text-transform: uppercase;
+    font-size: .78em;
+    letter-spacing: .02em;
+    margin-bottom: .1rem;
+}
+
+.furgonetka-pickup-point__name {
+    color: #2f3640;
+    word-break: break-word;
+}
+
+/* Trigger button */
+.furgonetka-pickup-point__button.ui.button {
+    display: flex;
+    align-items: center;
+    gap: .4rem;
+    margin: 0;
+    font-weight: 600;
+}
+
+.furgonetka-pickup-point__button.ui.button .icon {
+    margin: 0;
+    opacity: .85;
+}
+
+/* Chosen point shown inside the "Shipping address" box on the complete/summary page
+   (relocated there by furgonetka-shop.js). */
+.furgonetka-pickup-point-summary {
+    display: flex;
+    align-items: flex-start;
+    gap: .4rem;
+    margin-top: .75rem;
+    padding-top: .6rem;
+    border-top: 1px solid rgba(34, 36, 38, .1);
+    font-size: .95em;
+    line-height: 1.35;
+}
+
+.furgonetka-pickup-point-summary .icon {
+    margin: .05rem 0 0;
+    color: #21ba45;
+    flex: 0 0 auto;
+}
+
+.furgonetka-pickup-point-summary__label {
+    display: block;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: .78em;
+    letter-spacing: .02em;
+    color: #5a6b5a;
+    margin-bottom: .1rem;
+}
+
+.furgonetka-pickup-point-summary__name {
+    word-break: break-word;
+}

@@ -1,0 +1,9 @@
+# Require a chosen Furgonetka pickup point for the selected shipping method.
+# Auto-loaded by Symfony from the bundle's Resources/config/validation.yaml. Enforced in two groups:
+#  - furgonetka_select_shipping: the select-shipping step (primary gate — error shown right where the
+#    point is chosen; the group is added to that form by SelectShippingValidationGroupPass).
+#  - sylius_checkout_complete: the complete step (fallback gate — the order cannot be placed without it).
+Sylius\Component\Core\Model\Order:
+    constraints:
+        - Furgonetka\SyliusFurgonetkaPlugin\Validator\Constraints\PickupPointSelected:
+            groups: [furgonetka_select_shipping, sylius_checkout_complete]

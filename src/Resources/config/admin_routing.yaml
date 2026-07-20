@@ -1,0 +1,80 @@
+furgonetka_sylius_furgonetka_plugin_admin_advanced_reset:
+    path: '/furgonetka/advanced/reset'
+    methods: [ POST ]
+    defaults:
+        _controller: Furgonetka\SyliusFurgonetkaPlugin\Controller\Admin\FurgonetkaAdminAdvancedController::resetAction
+        _sylius:
+            section: admin
+            
+furgonetka_sylius_furgonetka_plugin_admin_advanced_download_error_logs:
+    path: '/furgonetka/advanced/download/error-logs'
+    methods: [ GET ]
+    defaults:
+        _controller: Furgonetka\SyliusFurgonetkaPlugin\Controller\Admin\FurgonetkaAdminAdvancedController::downloadErrorLogsAction
+        _sylius:
+            section: admin
+            
+furgonetka_sylius_furgonetka_plugin_admin_integration_connect:
+    path: '/furgonetka/integration/connect'
+    methods: [ POST ]
+    defaults:
+        _controller: Furgonetka\SyliusFurgonetkaPlugin\Controller\Admin\FurgonetkaAdminIntegrationController::connectAction
+        _sylius:
+            section: admin
+
+furgonetka_sylius_furgonetka_plugin_admin_integration_oauth:
+    path: '/furgonetka/integration/oauth'
+    methods: [ GET ]
+    defaults:
+        _controller: Furgonetka\SyliusFurgonetkaPlugin\Controller\Admin\FurgonetkaAdminIntegrationController::oAuthAction
+        _sylius:
+            section: admin
+
+furgonetka_sylius_furgonetka_plugin_admin_action_quick_package:
+    path: '/furgonetka/action/quick-package/{orderId}'
+    methods: [ GET ]
+    defaults:
+        _controller: Furgonetka\SyliusFurgonetkaPlugin\Controller\Admin\FurgonetkaAdminActionController::quickPackageAction
+        _sylius:
+            section: admin
+
+furgonetka_sylius_furgonetka_plugin_admin_action_quick_invoice:
+    path: '/furgonetka/action/quick-invoice/{orderId}'
+    methods: [ GET ]
+    defaults:
+        _controller: Furgonetka\SyliusFurgonetkaPlugin\Controller\Admin\FurgonetkaAdminActionController::quickInvoiceAction
+        _sylius:
+            section: admin
+
+furgonetka_sylius_furgonetka_plugin_admin_action_package_form:
+    path: '/furgonetka/action/package/{orderId}'
+    methods: [ GET ]
+    defaults:
+        _controller: Furgonetka\SyliusFurgonetkaPlugin\Controller\Admin\FurgonetkaAdminActionController::packageFormAction
+        _sylius:
+            section: admin
+            
+furgonetka_sylius_furgonetka_plugin_admin_page_begin:
+    path: '/furgonetka/begin'
+    methods: [ GET ]
+    defaults:
+        _controller: Furgonetka\SyliusFurgonetkaPlugin\Controller\Admin\FurgonetkaAdminPageController::beginPageAction
+        _sylius:
+            section: admin
+            
+furgonetka_sylius_furgonetka_plugin_admin_error_page:
+    path: '/furgonetka/error/{errorCode}'
+    methods: [ GET ]
+    defaults:
+        _controller: Furgonetka\SyliusFurgonetkaPlugin\Controller\Admin\FurgonetkaAdminPageController::errorPageAction
+        _sylius:
+            section: admin
+
+furgonetka_sylius_furgonetka_plugin_admin_page:
+    path: '/furgonetka/{page}'
+    methods: [ GET ]
+    defaults:
+        _controller: Furgonetka\SyliusFurgonetkaPlugin\Controller\Admin\FurgonetkaAdminPageController::pageAction
+        _sylius:
+            section: admin
+

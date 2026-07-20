@@ -1,0 +1,4 @@
+sylius:
+    furgonetka:
+        pickup_point:
+            not_selected: 'Wybierz punkt odbioru dla wybranej metody dostawy.'

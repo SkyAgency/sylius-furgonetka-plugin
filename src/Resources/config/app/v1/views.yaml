@@ -1,0 +1,61 @@
+# Sylius 1.13 / 1.14 admin view integration (Semantic UI + sylius_ui template events).
+# Loaded automatically by FurgonetkaSyliusFurgonetkaExtension::prepend() when Sylius major version is 1.
+sylius_grid:
+    templates:
+        action:
+            furgonetka_order_action_links: "@FurgonetkaSyliusFurgonetkaPlugin/admin/v1/grid/action/order_action_links.twig"
+
+sylius_ui:
+    events:
+        # Shop checkout: expose the shipping address (from the previous step) for the pickup-point map.
+        sylius.shop.checkout.select_shipping.before_form:
+            blocks:
+                furgonetka_pickup_point_address: '@FurgonetkaSyliusFurgonetkaPlugin/shop/v1/checkout/select_shipping/_address_data.html.twig'
+
+        # Shop checkout: pickup-point selector rendered in the method's right-hand column.
+        # Alignment across rows is handled in CSS (see css/v1/furgonetka-shop.css).
+        sylius.shop.checkout.select_shipping.choice_item_extra:
+            blocks:
+                furgonetka_pickup_point: '@FurgonetkaSyliusFurgonetkaPlugin/shop/v1/checkout/select_shipping/_pickup_point.html.twig'
+
+        # Shop checkout (complete): chosen pickup point for the order. Sylius 1.14 has no event
+        # inside the shipping-address column, so this renders hidden and the shared JS relocates
+        # it into #sylius-shipping-address (no shop template is overridden). Context carries `order`.
+        sylius.shop.checkout.complete.summary:
+            blocks:
+                furgonetka_complete_pickup_point: '@FurgonetkaSyliusFurgonetkaPlugin/shop/v1/checkout/complete/_pickup_point_summary.html.twig'
+
+        # Shop layout: pickup-point assets (JS lazy-loads the Furgonetka map SDK on checkout only).
+        sylius.shop.layout.javascripts:
+            blocks:
+                furgonetka_shop_javascripts: '@FurgonetkaSyliusFurgonetkaPlugin/shop/v1/_javascripts.html.twig'
+
+        sylius.shop.layout.stylesheets:
+            blocks:
+                furgonetka_shop_stylesheets: '@FurgonetkaSyliusFurgonetkaPlugin/shop/v1/_stylesheets.html.twig'
+
+        sylius.admin.order.index:
+            blocks:
+                furgonetka_modal: '@FurgonetkaSyliusFurgonetkaPlugin/admin/v1/_furgonetka_modal.html.twig'
+
+        sylius.admin.order.show.content:
+            blocks:
+                furgonetka_modal: '@FurgonetkaSyliusFurgonetkaPlugin/admin/v1/_furgonetka_modal.html.twig'
+
+        sylius.admin.order.show.sidebar:
+            blocks:
+                furgonetka_order_sidebar:
+                    template: "@FurgonetkaSyliusFurgonetkaPlugin/admin/v1/order/show/_furgonetka_sidebar.html.twig"
+                    priority: 34
+                # Chosen pickup point, rendered just below the addresses box (priority < addresses' 20).
+                furgonetka_pickup_point:
+                    template: "@FurgonetkaSyliusFurgonetkaPlugin/admin/v1/order/show/_pickup_point.html.twig"
+                    priority: 15
+
+        sylius.admin.layout.javascripts:
+            blocks:
+                furgonetka_admin_javascripts: '@FurgonetkaSyliusFurgonetkaPlugin/admin/v1/_javascripts.html.twig'
+
+        sylius.admin.layout.stylesheets:
+            blocks:
+                furgonetka_admin_stylesheets: '@FurgonetkaSyliusFurgonetkaPlugin/admin/v1/_stylesheets.html.twig'

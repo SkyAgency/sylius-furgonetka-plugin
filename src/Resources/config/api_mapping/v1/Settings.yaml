@@ -1,0 +1,21 @@
+Furgonetka\SyliusFurgonetkaPlugin\ApiPlatform\Resource\FurgonetkaSettingResource:
+    properties:
+        name:
+            identifier: true
+    collectionOperations:
+        admin_furgonetka_setting_post:
+            method: POST
+            path: /admin/furgonetka/settings
+            access_control: "is_granted('ROLE_API_ACCESS')"
+            # Write-only command: 201 with no body. output:false keeps the response identical to v2.
+            status: 201
+            output: false
+        admin_furgonetka_setting_get_collection:
+            method: GET
+            path: /admin/furgonetka/settings
+            access_control: "is_granted('ROLE_API_ACCESS')"
+    itemOperations:
+        admin_furgonetka_setting_get:
+            method: GET
+            path: /admin/furgonetka/settings/{name}
+            access_control: "is_granted('ROLE_API_ACCESS')"

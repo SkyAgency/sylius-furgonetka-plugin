@@ -1,0 +1,17 @@
+resources:
+    '%sylius.model.order.class%':
+        operations:
+            ApiPlatform\Metadata\GetCollection:
+                name: admin_furgonetka_order_get_collection
+                uriTemplate: /admin/furgonetka/orders
+                normalizationContext:
+                    groups: [ 'admin:furgonetka:order:index', 'sylius:admin:order:index' ]
+                order:
+                    updatedAt: DESC
+                filters:
+                    - sylius.api.furgonetka.order_id_numeric_filter
+                    - sylius.api.furgonetka.order_updated_at_order_filter
+                    - sylius.api.furgonetka.order_updated_at_date_filter                    
+        properties:
+            id:
+                filterable: true

@@ -1,0 +1,26 @@
+{% trans_default_domain 'furgonetka' %}
+{% set order = hookable_metadata.context.resource %}
+{% set furgonetka_is_company_account = furgonetka_is_company_account() %}
+{% set furgonetka_is_integrated = furgonetka_is_integrated() %}
+
+{% if furgonetka_is_integrated %}
+    <div class="card furgonetka-sidebar mb-3">
+        <div class="card-header">{{ 'sylius.furgonetka.furgonetka'|trans }}</div>
+        <div class="card-body d-grid gap-2">
+            <button type="button" class="btn btn-outline-primary btn-sm"
+                    onclick="window.FurgonetkaAdmin.Modal.openModal('{{ url('furgonetka_sylius_furgonetka_plugin_admin_action_quick_package', {'orderId': order.id}) }}')">
+                {{ 'sylius.furgonetka.quick_package'|trans }}
+            </button>
+            {% if furgonetka_is_company_account %}
+                <button type="button" class="btn btn-outline-primary btn-sm"
+                        onclick="window.FurgonetkaAdmin.Modal.openModal('{{ url('furgonetka_sylius_furgonetka_plugin_admin_action_quick_invoice', {'orderId': order.id}) }}')">
+                    {{ 'sylius.furgonetka.create_invoice'|trans }}
+                </button>
+            {% endif %}
+            <a class="btn btn-outline-primary btn-sm"
+               href="{{ url('furgonetka_sylius_furgonetka_plugin_admin_action_package_form', {'orderId': order.id}) }}">
+                {{ 'sylius.furgonetka.package'|trans }}
+            </a>
+        </div>
+    </div>
+{% endif %}

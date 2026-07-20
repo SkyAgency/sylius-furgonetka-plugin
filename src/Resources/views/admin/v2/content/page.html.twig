@@ -1,0 +1,68 @@
+{% trans_default_domain 'furgonetka' %}
+{% set ctx = hookable_metadata.context %}
+{% set screen = ctx.screen %}
+{% set title = ctx.title|default('sylius.furgonetka.furgonetka') %}
+{% set is_iframe_screen = screen != 'advanced' %}
+
+{# Native Sylius 2.x page header (breadcrumbs + title); our full-page shell renders it itself. #}
+<div class="page-header">
+    <div class="container-xl">
+        <ol class="breadcrumb" aria-label="breadcrumbs">
+            <li class="breadcrumb-item"><a href="{{ path('sylius_admin_dashboard') }}">{{ 'sylius.ui.dashboard'|trans({}, 'messages') }}</a></li>
+            {% if title == 'sylius.furgonetka.furgonetka' %}
+                <li class="breadcrumb-item active">{{ 'sylius.furgonetka.furgonetka'|trans }}</li>
+            {% else %}
+                <li class="breadcrumb-item"><a href="{{ path('furgonetka_sylius_furgonetka_plugin_admin_page', { page: 'panel_settings' }) }}">{{ 'sylius.furgonetka.furgonetka'|trans }}</a></li>
+                <li class="breadcrumb-item active">{{ title|trans }}</li>
+            {% endif %}
+        </ol>
+        <div class="row mt-3 row-gap-2">
+            <div class="col-12 col-md">
+                <div class="d-md-flex gap-2 align-items-center">
+                    <h1 class="page-title">{{ title|trans }}</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="page-body{% if is_iframe_screen %} furgonetka-iframe-screen{% endif %}">
+    <div class="container-xl">
+        {% if screen == 'advanced' %}
+            <div class="card mb-3">
+                <div class="card-header"><h3 class="card-title">{{ 'sylius.furgonetka.api_account'|trans }}</h3></div>
+                <div class="card-body">
+                    <p>{{ 'sylius.furgonetka.reset_button_description'|trans }}</p>
+                    <form method="post" action="{{ ctx.reset_url }}">
+                        <input type="hidden" name="_token" value="{{ csrf_token('furgonetka_reset') }}">
+                        <button type="submit" class="btn btn-danger">{{ 'sylius.furgonetka.reset_button'|trans }}</button>
+                    </form>
+                </div>
+            </div>
+            <div class="card mb-3">
+                <div class="card-header"><h3 class="card-title">{{ 'sylius.furgonetka.error_logs'|trans }}</h3></div>
+                <div class="card-body">
+                    <p>{{ 'sylius.furgonetka.error_logs_description'|trans }}</p>
+                    <a href="{{ ctx.download_url }}" download="{{ ctx.file_name }}" class="btn btn-primary">{{ 'sylius.furgonetka.download_button'|trans }}</a>
+                </div>
+            </div>
+        {% elseif screen == 'welcome' %}
+            {% include '@FurgonetkaSyliusFurgonetkaPlugin/admin/v2/_connection_alert.html.twig' %}
+            <iframe class="furgonetka-iframe" src="{{ ctx.welcome_url }}"></iframe>
+            <script>
+                window.addEventListener('load', function () {
+                    window.FurgonetkaAdmin.Integration.init('{{ ctx.base_shop_url|e('js') }}', '{{ ctx.connect_url|e('js') }}');
+                });
+            </script>
+        {% elseif screen == 'error' %}
+            <iframe class="furgonetka-iframe" src="{{ ctx.error_screen_url }}"></iframe>
+            <script>
+                window.addEventListener('load', function () {
+                    window.FurgonetkaAdmin.ErrorScreen.init('{{ ctx.base_shop_url|e('js') }}', '{{ ctx.redirect_url|e('js') }}');
+                });
+            </script>
+        {% else %}
+            <iframe class="furgonetka-iframe" src="{{ ctx.app_url }}"></iframe>
+        {% endif %}
+    </div>
+</div>

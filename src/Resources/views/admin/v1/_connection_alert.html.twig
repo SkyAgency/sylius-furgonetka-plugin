@@ -1,0 +1,13 @@
+{# Hidden Semantic UI flash message (Sylius 1.14 native markup); revealed by furgonetka-admin-common.js on a failed connect. #}
+{% trans_default_domain 'furgonetka' %}
+<div id="furgonetka-connection-alert"
+     class="ui icon negative message sylius-flash-message"
+     style="display: none;"
+     data-default-message="{{ 'sylius.furgonetka.connection_error'|trans }}">
+    <i class="close icon"></i>
+    <i class="remove icon"></i>
+    <div class="content">
+        <div class="header">{{ 'sylius.ui.error'|trans({}, 'messages') }}</div>
+        <p id="furgonetka-connection-alert-text"></p>
+    </div>
+</div>
