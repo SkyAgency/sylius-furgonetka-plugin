@@ -34,7 +34,7 @@
         "doctrine/doctrine-migrations-bundle": "^3.0.1",
         "doctrine/migrations": "^3.5.5",
         "doctrine/orm": "^2.13 || ^3.0",
-        "doctrine/persistence": "^2.3 || ^3.0",
+        "doctrine/persistence": "^2.3 || ^3.0 || ^4.0",
         "webmozart/assert": "^1.9"
     },
     "require-dev": {
